@@ -477,5 +477,9 @@ COND_SYSCALL(setresuid16);
 COND_SYSCALL(setreuid16);
 COND_SYSCALL(setuid16);
 
+/* Project 5 syscall */
+COND_SYSCALL(getuserweight);
+COND_SYSCALL(setuserweight);
+
 /* restartable sequence */
 COND_SYSCALL(rseq);

@@ -1265,8 +1265,8 @@ asmlinkage long sys_mmap_pgoff(unsigned long addr, unsigned long len,
 asmlinkage long sys_old_mmap(struct mmap_arg_struct __user *arg);
 
 /* Project 5 signatures */
-asmlinkage long getuserweight(int uid);
-asmlinkage long setuserweight(int uid, int weight);  
+asmlinkage long sys_getuserweight(int uid);
+asmlinkage long sys_setuserweight(int uid, int weight);  
 
 /*
  * Not a real system call, but a placeholder for syscalls which are

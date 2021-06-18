@@ -871,9 +871,14 @@ __SYSCALL(__NR_landlock_create_ruleset, sys_landlock_create_ruleset)
 __SYSCALL(__NR_landlock_add_rule, sys_landlock_add_rule)
 #define __NR_landlock_restrict_self 446
 __SYSCALL(__NR_landlock_restrict_self, sys_landlock_restrict_self)
+/* Project 5 syscalls */
+#define __NR_getuserweight 447
+__SYSCALL(__NR_getuserweight, sys_getuserweight)
+#define __NR_setuserweight 448
+__SYSCALL(__NR_setuserweight, sys_setuserweight)
 
 #undef __NR_syscalls
-#define __NR_syscalls 447
+#define __NR_syscalls 449
 
 /*
  * 32 bit systems traditionally used different
