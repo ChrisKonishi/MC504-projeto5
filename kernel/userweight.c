@@ -14,7 +14,9 @@ int user_weight_initialized = 0;
 
 /*  
     Como saber se o uid existe?
+        Em user.h/user.c, tem um find_user, talvez dê para usar, modificar a struct de user para algo bem mais elegante
     Validar melhor os args
+    Como saber o uid do user atual? Se o uid for -1, indica user atual
 */
 
 SYSCALL_DEFINE1(getuserweight, int, uid)
