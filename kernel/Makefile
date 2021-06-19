@@ -54,6 +54,9 @@ obj-y += livepatch/
 obj-y += dma/
 obj-y += entry/
 
+# Project 5
+obj-y += userweight.o
+
 obj-$(CONFIG_KCMP) += kcmp.o
 obj-$(CONFIG_FREEZER) += freezer.o
 obj-$(CONFIG_PROFILING) += profile.o
