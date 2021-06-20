@@ -1,4 +1,8 @@
 #include <linux/syscalls.h>
+#include <linux/sched/user.h>
+#include <linux/uidgid.h>
+//#include <sys/types.h>
+#include <linux/cred.h>
 
 #define MAX_USER 1000
 
@@ -22,12 +26,20 @@ int user_weight_initialized = 0;
 SYSCALL_DEFINE1(getuserweight, int, uid)
 {
     int i;
+    int c_uid;
     if (!user_weight_initialized){
         init_user_weight(user_list_weight);
         user_weight_initialized = 1;
     }
+    if (uid == -1){
+        c_uid = (int) (get_current_user()->uid).val;
+    }   
+    else{
+        c_uid = uid;
+    }
+
     for (i=0; i<1000; i++){
-        if (user_list_weight[i][0] == uid){
+        if (user_list_weight[i][0] == c_uid){
             return user_list_weight[i][1];
         }
     }
@@ -36,15 +48,23 @@ SYSCALL_DEFINE1(getuserweight, int, uid)
 
 SYSCALL_DEFINE2(setuserweight, int, uid, int, weight)
 {  
-    int i;
+    int i, c_uid;
     if (!user_weight_initialized){
         init_user_weight(user_list_weight);
         user_weight_initialized = 1;
     }
+
+    if (uid == -1){
+        c_uid = (int) (get_current_user()->uid).val;
+    }   
+    else{
+        c_uid = uid;
+    }
+
     for (i=0; i<1000; i++){
         if (user_list_weight[i][0] == -1){
             user_list_weight[i][1] = weight;
-            user_list_weight[i][0] = uid;
+            user_list_weight[i][0] = c_uid;
             return 1;
         }
     }
