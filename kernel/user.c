@@ -103,6 +103,7 @@ struct user_struct root_user = {
 	.locked_shm     = 0,
 	.uid		= GLOBAL_ROOT_UID,
 	.ratelimit	= RATELIMIT_STATE_INIT(root_user.ratelimit, 0, 0),
+	.weight = ATOMIC_INIT(10),
 };
 
 /*
@@ -176,7 +177,7 @@ struct user_struct *alloc_uid(kuid_t uid)
 {
 	struct hlist_head *hashent = uidhashentry(uid);
 	struct user_struct *up, *new;
-
+	printk("##################### user alloc###########################");
 	spin_lock_irq(&uidhash_lock);
 	up = uid_hash_find(uid, hashent);
 	spin_unlock_irq(&uidhash_lock);
@@ -188,6 +189,7 @@ struct user_struct *alloc_uid(kuid_t uid)
 
 		new->uid = uid;
 		refcount_set(&new->__count, 1);
+		atomic_set(&(new->weight), 10);
 		ratelimit_state_init(&new->ratelimit, HZ, 100);
 		ratelimit_set_flags(&new->ratelimit, RATELIMIT_MSG_ON_RELEASE);
 
