@@ -5,16 +5,6 @@
 
 #define MAX_USER 1000
 
-void init_user_weight(int v[][2]){
-    int u;
-    for (u=0; u<MAX_USER; u++){
-        v[u][0] = -1;
-        v[u][1] = 10;
-    }
-}
-int user_list_weight[MAX_USER][2];
-int user_weight_initialized = 0;
-
 /*  
     Como saber se o uid existe?
         Em user.h/user.c, tem um find_user, talvez dê para usar, modificar a struct de user para algo bem mais elegante
