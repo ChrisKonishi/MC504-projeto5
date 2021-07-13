@@ -3,8 +3,6 @@
 #include <linux/uidgid.h>
 #include <linux/cred.h>
 
-#define MAX_USER 1000
-
 SYSCALL_DEFINE1(getuserweight, int, uid)
 {
     kuid_t c_uid;
@@ -20,7 +18,7 @@ SYSCALL_DEFINE1(getuserweight, int, uid)
     if (user == NULL){
         return EINVAL;
     }
-    printk("uid: %d\n", (user->uid).val);
+    /* printk("uid: %d\n", (user->uid).val); */
     return (user->weight).counter;
 }
 
@@ -48,7 +46,7 @@ SYSCALL_DEFINE2(setuserweight, int, uid, int, weight)
     if (user == NULL){
         return EINVAL;
     }
-    printk("uid: %d\n", (user->uid).val);
+    /* printk("uid: %d\n", (user->uid).val); */
     atomic_set(&user->weight, weight);
     return 0;
 }
