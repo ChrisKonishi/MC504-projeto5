@@ -35,7 +35,7 @@ SYSCALL_DEFINE1(getuserweight, int, uid)
         user = find_user(c_uid);
     }
     if (user == NULL){
-        return -1;
+        return EINVAL;
     }
     printk("uid: %d\n", (user->uid).val);
     return (user->weight).counter;
@@ -44,19 +44,28 @@ SYSCALL_DEFINE1(getuserweight, int, uid)
 SYSCALL_DEFINE2(setuserweight, int, uid, int, weight)
 {  
     kuid_t c_uid;
-    struct user_struct *user;
+    struct user_struct *user, *caller;
 
+    if (weight <= 0) {
+        return EINVAL;
+    }
+
+    caller = get_current_user();
+
+    if ((caller->uid).val != 0) {
+        return EACCES;
+    }
     if (uid == -1){
-        user = get_current_user();
+        user = caller;
     }   
     else{
         c_uid.val = uid;
         user = find_user(c_uid);
     }
     if (user == NULL){
-        return -1;
+        return EINVAL;
     }
     printk("uid: %d\n", (user->uid).val);
     atomic_set(&user->weight, weight);
-    return 1;
+    return 0;
 }
